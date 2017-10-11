@@ -38,12 +38,15 @@ class CartoonmadSpider(scrapy.Spider):
     def parse(self, response: Response):
         # scrapy.shell.inspect_response(response, self)
         directory = urlparse(response.url).path.split("/")[-1].split(".")[0]
-        table: Selector = next(iter([table for table in response.xpath("//table[not(.//table)]") if self.is_table(table)]), None)
-        links = table.xpath(".//td/a/@href").extract()
         requests = []
-        for link in links:
-            url = response.urljoin(link)
-            requests.append(Request(url, self.parse_chapter, meta={"directory": directory}))
+        for table in response.xpath("//table[not(.//table)]"):
+            if not self.is_table(table):
+                continue
+
+            links = table.xpath(".//td/a/@href").extract()
+            for link in links:
+                url = response.urljoin(link)
+                requests.append(Request(url, self.parse_chapter, meta={"directory": directory}))
 
         self._requests = iter(requests)
 
