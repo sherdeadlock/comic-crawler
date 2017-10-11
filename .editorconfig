@@ -1,0 +1,25 @@
+# https://github.com/editorconfig/editorconfig/wiki/EditorConfig-Properties
+root = true
+
+[*]
+indent_style = tab
+indent_size = 4
+continuation_indent_size = 4
+charset = utf-8
+trim_trailing_whitespace = true
+end_of_line = lf
+insert_final_newline = true
+max_line_length = 120
+
+[*.md]
+trim_trailing_whitespace = false
+
+[*.py]
+indent_style = space
+
+[*.yaml]
+indent_size = 4
+indent_style = space
+
+[Makefile]
+indent_style = tab
